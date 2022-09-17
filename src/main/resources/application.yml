@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximumPoolSize: 20  # maximumPoolSize default: 10
+  redis:
+    database:
+      host: localhost
+      port: 6379
+    files: embedded-redisson.yml
+    embedded:
+      maxmemory: 128M
