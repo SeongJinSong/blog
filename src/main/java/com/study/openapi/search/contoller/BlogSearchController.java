@@ -1,6 +1,8 @@
 package com.study.openapi.search.contoller;
 
+import com.study.openapi.documents.Blog;
 import com.study.openapi.global.base.ResponseWrapper;
+import com.study.openapi.global.common.ApiService;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
 import com.study.openapi.search.service.SearchService;
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 @RestController
 public class BlogSearchController {
     private final SearchService searchService;
+    private final ApiService apiService;
 
     @GetMapping
     public ResponseEntity<ResponseWrapper<SearchResponse>> getBlogList(@Valid SearchRequest request){
@@ -31,10 +34,13 @@ public class BlogSearchController {
         searchService.saveRequest(request);
         
         //api 호출
+        SearchResponse<Blog> list = apiService.call(request);
         //레디스에 카운트 설정 - 분산락적용
+        //레디스가 뜰때, 집계함수를 통해 count 집계
+        //
 
         //레디스에 카운트 센것 주기적으로 db에 저장
         
-        return ResponseWrapper.ok(null, "success");
+        return ResponseWrapper.ok(list, "success");
     }
 }
