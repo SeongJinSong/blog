@@ -1,13 +1,13 @@
-package com.study.blog;
+package com.study.openapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BlogApplication {
+public class OpenApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BlogApplication.class, args);
+		SpringApplication.run(OpenApiApplication.class, args);
 	}
 
 }
