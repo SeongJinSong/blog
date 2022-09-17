@@ -1,10 +1,14 @@
 package com.study.openapi.global.common;
 
 
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString
 public class SearchResponse<T>  {
     private Meta meta;

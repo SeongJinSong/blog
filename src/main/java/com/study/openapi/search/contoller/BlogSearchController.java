@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -25,16 +26,18 @@ import javax.validation.Valid;
 @RestController
 public class BlogSearchController {
     private final SearchService searchService;
-    private final ApiService apiService;
+    private final ApiService<Blog> apiService;
 
     @GetMapping
-    public ResponseEntity<ResponseWrapper<SearchResponse>> getBlogList(@Valid SearchRequest request){
+    public ResponseEntity<ResponseWrapper<SearchResponse<Blog>>> getBlogList(
+            HttpServletRequest httpservletRequest, @Valid SearchRequest request){
         log.info("request : {}", request);
         //request를 저장은 추 후  AOP로 적용
         searchService.saveRequest(request);
         
         //api 호출
-        SearchResponse<Blog> list = apiService.call(request);
+        SearchResponse<Blog> list = apiService.call("https://dapi.kakao.com", httpservletRequest, request);
+
         //레디스에 카운트 설정 - 분산락적용
         //레디스가 뜰때, 집계함수를 통해 count 집계
         //
