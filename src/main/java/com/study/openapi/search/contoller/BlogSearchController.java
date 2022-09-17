@@ -5,9 +5,12 @@ import com.study.openapi.global.base.ResponseWrapper;
 import com.study.openapi.global.common.ApiService;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.search.contoller.dto.SearchRank;
 import com.study.openapi.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,10 +43,12 @@ public class BlogSearchController {
 
         //레디스에 카운트 설정 - 분산락적용
         //레디스가 뜰때, 집계함수를 통해 count 집계
-        //
-
         //레디스에 카운트 센것 주기적으로 db에 저장
         
         return ResponseWrapper.ok(list, "success");
+    }
+    @GetMapping("/rank")
+    public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
+        return ResponseWrapper.ok(searchService.getPopularSearchWord(pageable), "success");
     }
 }
