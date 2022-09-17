@@ -1,9 +1,17 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
   datasource:
     url: jdbc:h2:mem:test
+    username: sa
+    password:
     driver-class-name: org.h2.Driver
     hikari:
       maximumPoolSize: 20  # maximumPoolSize default: 10
+
   redis:
     database:
       host: localhost
@@ -11,3 +19,15 @@ spring:
     files: embedded-redisson.yml
     embedded:
       maxmemory: 128M
+
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
