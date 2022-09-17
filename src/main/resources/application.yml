@@ -7,7 +7,7 @@ spring:
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:mem:public;
+      jdbc-url: jdbc:h2:mem:public;OLD_INFORMATION_SCHEMA=TRUE
       username: sa
       password: 1234
 
