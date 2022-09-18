@@ -1,8 +1,6 @@
 package com.study.openapi.search.repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.openapi.search.contoller.dto.SearchRank;
@@ -13,15 +11,13 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
-
 import static com.study.openapi.search.domain.QSearchHistory.searchHistory;
 
 @Slf4j
-public class SearchRepositoryImpl implements SearchRepositoryCustom{
+public class SearchHistoryRepositoryImpl implements SearchHistoryRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
-    public SearchRepositoryImpl(EntityManager em) {
+    public SearchHistoryRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
