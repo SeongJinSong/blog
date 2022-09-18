@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import redis.embedded.RedisServer;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.List;
 
 @Configuration
 @Slf4j
@@ -26,6 +28,11 @@ public class EmbeddedRedisConfig {
     @Bean
     public RedisServer redisServer() {
         return redisServer;
+    }
+
+    @Bean
+    public RedisCustomConversions redisCustomConversions(BytesToAtomicIntegerConverter converter){
+        return new RedisCustomConversions(List.of(converter));
     }
 
     @PostConstruct

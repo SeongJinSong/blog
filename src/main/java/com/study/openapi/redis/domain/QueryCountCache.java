@@ -1,15 +1,13 @@
 package com.study.openapi.redis.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisHash;
 
 import org.springframework.data.annotation.Id;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 @Slf4j
 @Getter
@@ -17,12 +15,15 @@ import java.util.concurrent.atomic.AtomicLong;
 @NoArgsConstructor
 @Builder
 @RedisHash("query-count")
+@ToString
 public class QueryCountCache {
     @Id
     private String query;
-    private long count;
+    @Builder.Default
+    private AtomicLong counter = new AtomicLong();
     public QueryCountCache increaseCount(){
-        count++;
+        counter.incrementAndGet();
+        log.info("#### count:"+counter.get());
         return this;
     }
 }

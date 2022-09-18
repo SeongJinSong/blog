@@ -45,7 +45,7 @@ public class BlogSearchController {
         SearchResponse<Blog> list = apiService.call("https://dapi.kakao.com", httpservletRequest, request);
 
         //레디스에 카운트 설정
-        //TODO 아토믹 자료형 사용
+        //TODO LongAdder, Accumulator 적용
         redisService.inCreateCount(request.getQuery());
         //레디스가 뜰때, 집계함수를 통해 count 집계
         //레디스에 카운트 센것 주기적으로 db에 저장
