@@ -1,4 +1,4 @@
-package com.study.openapi.global.config.redis;
+package com.study.openapi.redis.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
