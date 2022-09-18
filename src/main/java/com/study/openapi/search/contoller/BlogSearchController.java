@@ -5,6 +5,7 @@ import com.study.openapi.global.base.ResponseWrapper;
 import com.study.openapi.global.common.ApiService;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.redis.service.RedisService;
 import com.study.openapi.search.contoller.dto.SearchRank;
 import com.study.openapi.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ import java.util.List;
 @RestController
 public class BlogSearchController {
     private final SearchService searchService;
+    private final RedisService redisService;
     private final ApiService<Blog> apiService;
 
     @GetMapping
@@ -42,7 +44,9 @@ public class BlogSearchController {
         //api 호출
         SearchResponse<Blog> list = apiService.call("https://dapi.kakao.com", httpservletRequest, request);
 
-        //레디스에 카운트 설정 - 분산락적용
+        //레디스에 카운트 설정
+        //TODO 아토믹 자료형 사용
+        redisService.inCreateCount(request.getQuery());
         //레디스가 뜰때, 집계함수를 통해 count 집계
         //레디스에 카운트 센것 주기적으로 db에 저장
         
