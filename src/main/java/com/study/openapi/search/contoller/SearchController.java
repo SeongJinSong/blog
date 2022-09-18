@@ -36,6 +36,7 @@ public class SearchController {
     @GetMapping
     public ResponseEntity<ResponseWrapper<SearchResponse<Blog>>> getBlogList(
             HttpServletRequest httpservletRequest, @Valid SearchRequest request){
+        //TODO 서비스든에 HttpServletRequest를 넘겨주는것 수정 필요
         return ResponseWrapper.ok(searchService.getBlogList(httpservletRequest, request), "success");
     }
 
