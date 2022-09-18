@@ -36,7 +36,11 @@ public class SearchController {
     @GetMapping
     public ResponseEntity<ResponseWrapper<SearchResponse<Blog>>> getBlogList(
             HttpServletRequest httpservletRequest, @Valid SearchRequest request){
-        //TODO 서비스든에 HttpServletRequest를 넘겨주는것 수정 필요
+        /* TODO
+            1. 서비스단 에 HttpServletRequest를 넘겨주는것 수정 필요
+            2. 카카오 api에서 실패하는 경우 네이버 api를 사용하는 것을 구현하기위해
+            MSA에서 fault tolerance로 많이 사용하는tolaresilience4j를 적용해보자.
+         */
         return ResponseWrapper.ok(searchService.getBlogList(httpservletRequest, request), "success");
     }
 
