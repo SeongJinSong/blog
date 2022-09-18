@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+//TODO SearchService 범용적으로 처리하기 위해 인터페이스로 변경
 public class SearchService {
     private final SearchRepository searchRepository;
     @Transactional
@@ -25,10 +26,6 @@ public class SearchService {
     }
 
     public Page<SearchRank> getPopularSearchWord(Pageable pageable) {
-        return searchRepository.findTop10SearchHistory(pageable);
-    }
-
-    public List<SearchRank> getPopularSearchWord() {
-        return searchRepository.findTop10SearchHistory();
+        return searchRepository.findTopSearchHistory(pageable);
     }
 }

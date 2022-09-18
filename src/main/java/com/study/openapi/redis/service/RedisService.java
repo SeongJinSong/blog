@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequiredArgsConstructor
 @Service
 @ConditionalOnProperty(prefix = "spring.redis.database", value = "host")
+//TODO RedisService 자체가 <T> 에 의존적이어도 될까?
 public class RedisService <T> {
     private final QueryCountCacheRepository queryCountCacheRepository;
     private final ApiResultCacheRepository apiResultCacheRepository;

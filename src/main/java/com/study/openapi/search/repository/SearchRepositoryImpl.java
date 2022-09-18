@@ -25,7 +25,7 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom{
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
-    public Page<SearchRank> findTop10SearchHistory(Pageable pageable) {
+    public Page<SearchRank> findTopSearchHistory(Pageable pageable) {
         JPAQuery<SearchRank> content = queryFactory.select(
                         Projections.fields(SearchRank.class,
                                 searchHistory.searchRequest.query,
@@ -35,17 +35,8 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom{
                 .groupBy(searchHistory.searchRequest.query)
                 .orderBy(searchHistory.searchRequest.query.count().desc());
         long totalCnt = content.fetch().size();
-        return PageableExecutionUtils.getPage(content.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch(), pageable, () -> totalCnt);
-    }
-    @Override
-    public List<SearchRank> findTop10SearchHistory() {
-        return queryFactory.select(
-                        Projections.fields(SearchRank.class,
-                                searchHistory.searchRequest.query,
-                                searchHistory.searchRequest.query.count().as("count"))
-                )
-                .from(searchHistory)
-                .groupBy(searchHistory.searchRequest.query)
-                .orderBy(searchHistory.searchRequest.query.count().desc()).limit(10).fetch();
+        long offset = pageable.getOffset();
+        long limit = pageable.getPageSize()==0?10:pageable.getPageSize();
+        return PageableExecutionUtils.getPage(content.offset(offset).limit(limit).fetch(), pageable, () -> totalCnt);
     }
 }

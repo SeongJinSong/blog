@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Builder
 @RedisHash("query-count")
 @ToString
+//TODO zset 기반으로 RedisService 에 만들어서 그걸로 순위를 결정하게 하자
 public class QueryCountCache {
     @Id
     private String query;
