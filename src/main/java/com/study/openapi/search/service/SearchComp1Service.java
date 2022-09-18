@@ -23,11 +23,9 @@ public class SearchComp1Service implements SearchService{
     @Override
     public SearchResponse<Blog> getBlogList(HttpServletRequest httpservletRequest, SearchRequest request) {
         log.info("request : {}", request);
-        //TODO request를 저장은 추 후  AOP로 적용 또는 threadPoolExecutor 별도로 빼서 비동기로 처리
         searchHistoryService.saveRequest(request);
 
         String key = host+"/"+httpservletRequest.getRequestURI()+"?"+httpservletRequest.getQueryString();
-
         //TODO @Cacheable을 적용하여 분기 삭제
         SearchResponse<Blog> response = redisService.getApiResultCache(key);
         if(response==null){
