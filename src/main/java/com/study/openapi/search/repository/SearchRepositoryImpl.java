@@ -13,6 +13,8 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static com.study.openapi.search.domain.QSearchHistory.searchHistory;
 
 @Slf4j
@@ -34,5 +36,16 @@ public class SearchRepositoryImpl implements SearchRepositoryCustom{
                 .orderBy(searchHistory.searchRequest.query.count().desc());
         long totalCnt = content.fetch().size();
         return PageableExecutionUtils.getPage(content.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch(), pageable, () -> totalCnt);
+    }
+    @Override
+    public List<SearchRank> findTop10SearchHistory() {
+        return queryFactory.select(
+                        Projections.fields(SearchRank.class,
+                                searchHistory.searchRequest.query,
+                                searchHistory.searchRequest.query.count().as("count"))
+                )
+                .from(searchHistory)
+                .groupBy(searchHistory.searchRequest.query)
+                .orderBy(searchHistory.searchRequest.query.count().desc()).limit(10).fetch();
     }
 }

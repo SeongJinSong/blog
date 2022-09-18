@@ -27,4 +27,8 @@ public class SearchService {
     public Page<SearchRank> getPopularSearchWord(Pageable pageable) {
         return searchRepository.findTop10SearchHistory(pageable);
     }
+
+    public List<SearchRank> getPopularSearchWord() {
+        return searchRepository.findTop10SearchHistory();
+    }
 }

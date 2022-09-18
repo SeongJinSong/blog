@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Host : dapi.kakao.com
@@ -50,5 +51,9 @@ public class BlogSearchController {
     @GetMapping("/rank")
     public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
         return ResponseWrapper.ok(searchService.getPopularSearchWord(pageable), "success");
+    }
+    @GetMapping("/rank10")
+    public ResponseEntity<ResponseWrapper<List<SearchRank>>> getPopularSearchWord(){
+        return ResponseWrapper.ok(searchService.getPopularSearchWord(), "success");
     }
 }
