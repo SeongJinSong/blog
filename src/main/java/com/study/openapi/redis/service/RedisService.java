@@ -6,6 +6,7 @@ import com.study.openapi.redis.domain.ApiResultCache;
 import com.study.openapi.redis.domain.QueryCountCache;
 import com.study.openapi.redis.repository.ApiResultCacheRepository;
 import com.study.openapi.redis.repository.QueryCountCacheRepository;
+import com.study.openapi.redis.repository.SearchResponseDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,21 +19,21 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequiredArgsConstructor
 @Service
 @ConditionalOnProperty(prefix = "spring.redis.database", value = "host")
-public class RedisService {
+public class RedisService <T> {
     private final QueryCountCacheRepository queryCountCacheRepository;
     private final ApiResultCacheRepository apiResultCacheRepository;
+    private final SearchResponseDao searchResponseDao;
     public void inCreateCount(String query){
         queryCountCacheRepository.findById(query)
                 .ifPresentOrElse(cache->queryCountCacheRepository.save(cache.increaseCount())
                 , ()->queryCountCacheRepository.save(QueryCountCache.builder().query(query).build().increaseCount()));
     }
 
-    public SearchResponse<Blog> getApiResultCache(String key) {
-        if(apiResultCacheRepository.findById(key).isEmpty())return null;
-        else return apiResultCacheRepository.findById(key).get().getResponse();
+    public SearchResponse<T> getApiResultCache(String key) {
+        return searchResponseDao.findById(key);
     }
 
-    public void saveApiResultCache(String key, SearchResponse<Blog> response) {
-        apiResultCacheRepository.save(ApiResultCache.builder().request(key).response(response).build());
+    public void saveApiResultCache(String key, SearchResponse<T> response) {
+        searchResponseDao.addItem(response, key);
     }
 }

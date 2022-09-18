@@ -41,11 +41,11 @@ public class BlogSearchController {
         //request를 저장은 추 후  AOP로 적용
         searchService.saveRequest(request);
 
-        //TODO @Cacheable을 적용하여 분기 삭제
+
         String host = "https://dapi.kakao.com";
         String key = host+"/"+httpservletRequest.getRequestURI()+"?"+httpservletRequest.getQueryString();
 
-        //레디스 먼저 확인
+        //TODO @Cacheable을 적용하여 분기 삭제
         SearchResponse<Blog> response = redisService.getApiResultCache(key);
         if(response==null){
             //api 호출
@@ -53,7 +53,7 @@ public class BlogSearchController {
             response = apiService.call(host, httpservletRequest, request);
             //레디스에 api 검색결과 저장
             //TODO redis에 DTO를 저장하는 로우레벨 설정을 위해 RedisTemplate 적용 필요
-            //redisService.saveApiResultCache(key, response);
+            redisService.saveApiResultCache(key, response);
         }
 
         //레디스에 카운트 설정
