@@ -2,12 +2,10 @@ package com.study.openapi.redis.domain;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import org.springframework.data.annotation.Id;
-
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.LongAdder;
 
 @Slf4j
 @Getter
