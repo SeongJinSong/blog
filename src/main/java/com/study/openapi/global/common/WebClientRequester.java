@@ -31,9 +31,9 @@ public class WebClientRequester {
                     HttpClientRequest httpRequest = clientHttpRequest.getNativeRequest();
                     httpRequest.responseTimeout(Duration.ofSeconds(5));
                 })
-                .header("Content-Type", request.getHeader("Content-Type"))
-                .header( "Accept", request.getHeader("Accept"))
-                .header("Authorization", request.getHeader("Authorization"))
+                .header("Content-Type", request.getHeader("Content-Type")!=null?request.getHeader("Content-Type"):"application/x-www-form-urlencoded")
+                .header( "Accept", request.getHeader("Accept")!=null?request.getHeader("Accept"):"application/json")
+                .header("Authorization", request.getHeader("Authorization")!=null?request.getHeader("Authorization"):"KakaoAK 9ccac738a217f2aa9d006c01900809cc")
                 .retrieve();
     }
 }
