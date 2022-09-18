@@ -41,6 +41,7 @@ public class BlogSearchController {
         //request를 저장은 추 후  AOP로 적용
         searchService.saveRequest(request);
 
+        //TODO @Cacheable을 적용하여 분기 삭제
         String host = "https://dapi.kakao.com";
         String key = host+"/"+httpservletRequest.getRequestURI()+"?"+httpservletRequest.getQueryString();
 
