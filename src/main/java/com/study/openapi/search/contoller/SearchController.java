@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Host : dapi.kakao.com
@@ -29,7 +28,7 @@ import java.util.List;
 @RequestMapping(path = "/v2/search/blog")
 @RequiredArgsConstructor
 @RestController
-public class BlogSearchController {
+public class SearchController {
     private final SearchService searchService;
     private final RedisService redisService;
     private final ApiService<Blog> apiService;
@@ -63,6 +62,13 @@ public class BlogSearchController {
         
         return ResponseWrapper.ok(response, "success");
     }
+
+    /**
+     * DB에 저장된 History를 검색어 기반으로 그루핑해 오더링한 결과를 리턴한다.
+     *
+     * @param pageable default limit = 10
+     * @return responseWrapper
+     */
     @GetMapping("/rank")
     public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
         return ResponseWrapper.ok(searchService.getPopularSearchWord(pageable), "success");
