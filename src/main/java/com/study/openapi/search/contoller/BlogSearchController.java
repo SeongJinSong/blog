@@ -40,9 +40,20 @@ public class BlogSearchController {
         log.info("request : {}", request);
         //request를 저장은 추 후  AOP로 적용
         searchService.saveRequest(request);
-        
-        //api 호출
-        SearchResponse<Blog> list = apiService.call("https://dapi.kakao.com", httpservletRequest, request);
+
+        String host = "https://dapi.kakao.com";
+        String key = host+"/"+httpservletRequest.getRequestURI()+"?"+httpservletRequest.getQueryString();
+
+        //레디스 먼저 확인
+        SearchResponse<Blog> response = redisService.getApiResultCache(key);
+        if(response==null){
+            //api 호출
+            System.out.println("@@@@@@@ api 직접 호출");
+            response = apiService.call(host, httpservletRequest, request);
+            //레디스에 api 검색결과 저장
+            //TODO redis에 DTO를 저장하는 로우레벨 설정을 위해 RedisTemplate 적용 필요
+            //redisService.saveApiResultCache(key, response);
+        }
 
         //레디스에 카운트 설정
         //TODO LongAdder, Accumulator 적용
@@ -50,7 +61,7 @@ public class BlogSearchController {
         //레디스가 뜰때, 집계함수를 통해 count 집계
         //레디스에 카운트 센것 주기적으로 db에 저장
         
-        return ResponseWrapper.ok(list, "success");
+        return ResponseWrapper.ok(response, "success");
     }
     @GetMapping("/rank")
     public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
