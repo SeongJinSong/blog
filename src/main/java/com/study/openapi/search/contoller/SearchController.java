@@ -2,8 +2,8 @@ package com.study.openapi.search.contoller;
 
 import com.study.openapi.search.contents.Blog;
 import com.study.openapi.global.base.ResponseWrapper;
-import com.study.openapi.global.common.SearchRequest;
-import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.search.dto.SearchRequest;
+import com.study.openapi.search.dto.SearchResponse;
 import com.study.openapi.search.domain.SearchRank;
 import com.study.openapi.search.service.SearchRankService;
 import com.study.openapi.search.service.SearchHistoryService;

@@ -1,6 +1,6 @@
 package com.study.openapi.redis.repository;
 
-import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

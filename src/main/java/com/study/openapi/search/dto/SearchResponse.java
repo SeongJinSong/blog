@@ -1,6 +1,7 @@
-package com.study.openapi.global.common;
+package com.study.openapi.search.dto;
 
 
+import com.study.openapi.global.common.Meta;
 import lombok.*;
 
 import java.io.Serializable;

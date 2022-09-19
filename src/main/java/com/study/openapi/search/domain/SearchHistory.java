@@ -1,7 +1,7 @@
 package com.study.openapi.search.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.study.openapi.global.common.SearchRequest;
+import com.study.openapi.search.dto.SearchRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

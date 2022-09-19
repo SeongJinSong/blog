@@ -1,4 +1,4 @@
-package com.study.openapi.global.common;
+package com.study.openapi.search.dto;
 
 import com.sun.istack.Nullable;
 import lombok.*;

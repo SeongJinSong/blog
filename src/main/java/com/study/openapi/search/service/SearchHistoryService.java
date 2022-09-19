@@ -1,6 +1,6 @@
 package com.study.openapi.search.service;
 
-import com.study.openapi.global.common.SearchRequest;
+import com.study.openapi.search.dto.SearchRequest;
 import com.study.openapi.search.domain.SearchRank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

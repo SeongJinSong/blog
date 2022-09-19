@@ -1,8 +1,8 @@
 package com.study.openapi.search.service;
 
 import com.study.openapi.global.common.ApiService;
-import com.study.openapi.global.common.SearchRequest;
-import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.search.dto.SearchRequest;
+import com.study.openapi.search.dto.SearchResponse;
 import com.study.openapi.redis.service.QueryCountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.study.openapi.search.service;
 
-import com.study.openapi.global.common.SearchRequest;
+import com.study.openapi.search.dto.SearchRequest;
 import com.study.openapi.search.domain.SearchRank;
 import com.study.openapi.search.domain.SearchHistory;
 import com.study.openapi.search.repository.SearchHistoryRepository;

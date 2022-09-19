@@ -1,9 +1,10 @@
 package com.study.openapi.global.common;
 
 import com.study.openapi.global.exception.OpenApiCallException;
+import com.study.openapi.search.dto.SearchRequest;
+import com.study.openapi.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,9 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ApiService <T> {
+public class ApiService {
     private final WebClientRequester webClientRequester;
+    //TODO searhcResponse에 의존하는것 수정 필요
     public SearchResponse call(String host, HttpServletRequest httpservletRequest, SearchRequest request) {
         System.out.println(host+httpservletRequest.getRequestURI()+httpservletRequest.getQueryString());
         return Optional.ofNullable(webClientRequester.getWebClient(

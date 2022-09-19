@@ -1,6 +1,6 @@
 package com.study.openapi.redis.service;
 
-import com.study.openapi.global.common.SearchResponse;
+import com.study.openapi.search.dto.SearchResponse;
 import com.study.openapi.redis.domain.QueryCountCache;
 import com.study.openapi.redis.repository.ApiResultCacheRepository;
 import com.study.openapi.redis.repository.QueryCountCacheRepository;
