@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
+/**
+ * Host : dapi.kakao.com
+ * Authorization: KakaoAK ${REST_API_KEY:9ccac738a217f2aa9d006c01900809cc}
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

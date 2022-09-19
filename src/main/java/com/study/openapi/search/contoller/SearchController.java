@@ -19,12 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-/**
- * Host : dapi.kakao.com
- * Authorization: KakaoAK ${REST_API_KEY:9ccac738a217f2aa9d006c01900809cc}
- */
 @Slf4j
-@RequestMapping(path = "/v2/search/blog")
+@RequestMapping(path = "/v1/search/blog")
 @RequiredArgsConstructor
 @RestController
 public class SearchController {
