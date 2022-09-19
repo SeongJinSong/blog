@@ -1,5 +1,6 @@
-package com.study.openapi.redis.repository;
+package com.study.openapi.search.repository;
 
+import com.study.openapi.redis.repository.ResponseDao;
 import com.study.openapi.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,11 +10,12 @@ import java.util.concurrent.TimeUnit;
 
 @Repository
 @RequiredArgsConstructor
-public class SearchResponseDao<T>{
+public class SearchResponseDao implements ResponseDao {
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void addItem(SearchResponse searchResponse, String key){
-        redisTemplate.opsForValue().set(key, searchResponse);
+    @Override
+    public void addItem(Object response, String key) {
+        redisTemplate.opsForValue().set(key, response);
         redisTemplate.expire(key, 10, TimeUnit.SECONDS);
     }
 

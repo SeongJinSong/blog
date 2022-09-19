@@ -1,7 +1,6 @@
 package com.study.openapi.search.service;
 
 import com.study.openapi.global.common.ApiService;
-import com.study.openapi.redis.service.ApiResultCacheService;
 import com.study.openapi.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,17 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SearchComp1Service implements SearchService{
-    private final SearchHistoryService searchHistoryService;
-
-    private final ApiResultCacheService apiResultCacheService;
-    private final SearchRankService searchRankService;
+    private final SearchApiResultCacheService searchApiResultCacheService;
     private final ApiService apiService;
     String host = "https://dapi.kakao.com";
 
     @Override
     public SearchResponse getContentsList(String uri, String queryString) {
-
-
         String key = getComp1ApiRedisKey(uri, queryString);
         /*
             TODO
@@ -29,13 +23,13 @@ public class SearchComp1Service implements SearchService{
              2. API자체를 캐싱하는건 Client단에서 어울릴만한 일이다. reactQuery가 그런비슷한 역할을 하기도한다.
              서버단에서는 뭔가 서버단에서 어울릴만한 캐싱 알고리즘을 찾아보아야 할 것 같다.
          */
-        SearchResponse response = apiResultCacheService.getApiResultCache(key);
+        SearchResponse response = searchApiResultCacheService.getApiResultCache(key);
         if(response==null){
             //api 호출
             log.info("@@@@@@@ api 직접 호출 key={}", key);
             response = apiService.get(host, getUrlTemplate(uri, queryString));
             //레디스에 api 검색결과 저장
-            apiResultCacheService.saveApiResultCache(key, response);
+            searchApiResultCacheService.saveApiResultCache(key, response);
         }
 
 
