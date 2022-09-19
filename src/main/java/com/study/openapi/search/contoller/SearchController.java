@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
-@RequestMapping(path = "/v1/search/blog")
+@RequestMapping(path = "/v2/search/blog")
 @RequiredArgsConstructor
 @RestController
 public class SearchController {
