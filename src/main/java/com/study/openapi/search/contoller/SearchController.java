@@ -5,6 +5,7 @@ import com.study.openapi.global.base.ResponseWrapper;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
 import com.study.openapi.search.contoller.dto.SearchRank;
+import com.study.openapi.search.service.SearchRankService;
 import com.study.openapi.search.service.SearchHistoryService;
 import com.study.openapi.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequestMapping(path = "/v2/search/blog")
@@ -25,6 +27,7 @@ import javax.validation.Valid;
 @RestController
 public class SearchController {
     private final SearchService searchService;
+    private final SearchRankService searchRankService;
     private final SearchHistoryService searchHistoryService;
 
     @GetMapping
@@ -47,5 +50,10 @@ public class SearchController {
     @GetMapping("/rank")
     public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
         return ResponseWrapper.ok(searchHistoryService.getPopularSearchWord(pageable), "success");
+    }
+
+    @GetMapping("/rank-new")
+    public ResponseEntity<ResponseWrapper<List<SearchRank>>> searchRankList(){
+        return ResponseWrapper.ok(searchRankService.searchRankList(), "success");
     }
 }
