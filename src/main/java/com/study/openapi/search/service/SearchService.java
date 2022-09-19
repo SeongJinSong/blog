@@ -1,6 +1,6 @@
 package com.study.openapi.search.service;
 
-import com.study.openapi.documents.Blog;
+import com.study.openapi.search.contents.Blog;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
 

@@ -1,4 +1,4 @@
-package com.study.openapi.documents;
+package com.study.openapi.search.contents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
