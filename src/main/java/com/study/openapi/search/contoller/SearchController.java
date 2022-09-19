@@ -4,7 +4,7 @@ import com.study.openapi.documents.Blog;
 import com.study.openapi.global.base.ResponseWrapper;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
-import com.study.openapi.search.contoller.dto.SearchRank;
+import com.study.openapi.search.domain.SearchRank;
 import com.study.openapi.search.service.SearchRankService;
 import com.study.openapi.search.service.SearchHistoryService;
 import com.study.openapi.search.service.SearchService;

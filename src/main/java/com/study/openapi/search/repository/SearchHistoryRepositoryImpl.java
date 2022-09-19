@@ -3,7 +3,7 @@ package com.study.openapi.search.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.openapi.search.contoller.dto.SearchRank;
+import com.study.openapi.search.domain.SearchRank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

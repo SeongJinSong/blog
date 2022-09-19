@@ -1,7 +1,7 @@
 package com.study.openapi.search.service;
 
 import com.study.openapi.global.common.SearchRequest;
-import com.study.openapi.search.contoller.dto.SearchRank;
+import com.study.openapi.search.domain.SearchRank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
