@@ -1,6 +1,5 @@
 package com.study.openapi.search.service;
 
-import com.study.openapi.search.dto.SearchRequest;
 import com.study.openapi.search.domain.SearchRank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +20,15 @@ public class SearchRankService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    public void addSearchRequest(SearchRequest request){
+    public void addSearchRequest(String query){
         double score = 0.0;
         try{
-            redisTemplate.opsForZSet().incrementScore("search-ranking", request.getQuery(), 1);
+            redisTemplate.opsForZSet().incrementScore("search-ranking", query, 1);
         }catch (Exception e){
             log.info(String.valueOf(e));
         }
         //score를 1씩 올려준다.
-        redisTemplate.opsForZSet().incrementScore("search-ranking", request.getQuery(), score);
+        redisTemplate.opsForZSet().incrementScore("search-ranking", query, score);
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.study.openapi.search.contoller;
 
+import com.study.openapi.redis.service.QueryCountService;
 import com.study.openapi.search.contents.Blog;
 import com.study.openapi.global.base.ResponseWrapper;
 import com.study.openapi.search.dto.SearchRequest;
@@ -29,16 +30,21 @@ public class SearchController {
     private final SearchService searchService;
     private final SearchRankService searchRankService;
     private final SearchHistoryService searchHistoryService;
+    private final QueryCountService queryCountService;
 
     @GetMapping
-    public ResponseEntity<ResponseWrapper<SearchResponse<Blog>>> getBlogList(
+    public ResponseEntity<ResponseWrapper<SearchResponse<Blog>>> getContentsList(
             HttpServletRequest httpservletRequest, @Valid SearchRequest request){
-        /* TODO
-            1. 서비스단 에 HttpServletRequest를 넘겨주는것 수정 필요
-            2. 카카오 api에서 실패하는 경우 네이버 api를 사용하는 것을 구현하기위해
-            MSA에서 fault tolerance로 많이 사용하는tolaresilience4j를 적용해보자.
-         */
-        return ResponseWrapper.ok(searchService.getBlogList(httpservletRequest, request), "success");
+        // TODO 카카오 api에서 실패하는 경우 네이버 api를 사용하는 것을 구현하기위해 MSA에서 fault tolerance로 많이 사용하는tolaresilience4j를 적용해보자.
+        searchHistoryService.saveRequest(request);
+
+        //레디스에 카운트 설정
+        //TODO : LongAdder, Accumulator 적용해보기
+        queryCountService.inCreateCount(request.getQuery());
+
+        //TODO 조회와 삽입이 분리되면 동시성 문제가 발생할 수 있어 lua-script 기반으로 돌리는 방법도 찾아보자
+        searchRankService.addSearchRequest(request.getQuery());
+        return ResponseWrapper.ok(searchService.getContentsList(httpservletRequest.getRequestURI(), makeQueryString(request)), "success");
     }
 
     /**
@@ -55,5 +61,8 @@ public class SearchController {
     @GetMapping("/rank-new")
     public ResponseEntity<ResponseWrapper<List<SearchRank>>> searchRankList(){
         return ResponseWrapper.ok(searchRankService.searchRankList(), "success");
+    }
+    private String makeQueryString(SearchRequest request){
+        return "query="+request.getQuery()+"&sort="+request.getSort()+"&page="+request.getPage()+"&size="+request.getSize();
     }
 }

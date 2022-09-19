@@ -1,16 +1,12 @@
 package com.study.openapi.search.service;
 
 import com.study.openapi.search.contents.Blog;
-import com.study.openapi.search.dto.SearchRequest;
 import com.study.openapi.search.dto.SearchResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * 검색과 관련된 동작을 정의한 인터페이스
  */
 public interface SearchService {
-    SearchResponse<Blog> getBlogList(
-            HttpServletRequest httpservletRequest, @Valid SearchRequest request);
+    SearchResponse<Blog> getContentsList(
+            String uri, String queryString);
 }

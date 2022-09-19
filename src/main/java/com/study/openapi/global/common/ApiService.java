@@ -1,13 +1,11 @@
 package com.study.openapi.global.common;
 
 import com.study.openapi.global.exception.OpenApiCallException;
-import com.study.openapi.search.dto.SearchRequest;
 import com.study.openapi.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Slf4j
@@ -15,13 +13,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ApiService {
     private final WebClientRequester webClientRequester;
-    //TODO searhcResponse에 의존하는것 수정 필요
-    public SearchResponse call(String host, HttpServletRequest httpservletRequest, SearchRequest request) {
-        System.out.println(host+httpservletRequest.getRequestURI()+httpservletRequest.getQueryString());
-        return Optional.ofNullable(webClientRequester.getWebClient(
-                host+"/"+httpservletRequest.getRequestURI()+"?"+
-                        //TODO 인크딩으로 인해 공백이 들어간 검색결과가 달라서 임시로 조합함
-                        "query="+request.getQuery()+"&sort="+request.getSort()+"&page="+request.getPage()+"&size="+request.getSize())
+    //TODO searchResponse에 의존하는것 수정 필요
+    public SearchResponse get(String host, String urlTemplate) {
+        return Optional.ofNullable(webClientRequester.getWebClient(host+urlTemplate)
                         .bodyToMono(SearchResponse.class).block())
                         .orElseThrow(OpenApiCallException::new);
     }
