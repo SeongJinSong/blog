@@ -4,7 +4,7 @@ import com.study.openapi.documents.Blog;
 import com.study.openapi.global.common.ApiService;
 import com.study.openapi.global.common.SearchRequest;
 import com.study.openapi.global.common.SearchResponse;
-import com.study.openapi.redis.service.RedisService;
+import com.study.openapi.redis.service.QueryCountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class SearchComp1Service implements SearchService{
     private final SearchHistoryService searchHistoryService;
-    private final RedisService redisService;
+    private final QueryCountService queryCountService;
     private final ApiService apiService;
     String host = "https://dapi.kakao.com";
 
@@ -32,18 +32,18 @@ public class SearchComp1Service implements SearchService{
              2. API자체를 캐싱하는건 Client단에서 어울릴만한 일이다. reactQuery가 그런비슷한 역할을 하기도한다.
              서버단에서는 뭔가 서버단에서 어울릴만한 캐싱 알고리즘을 찾아보아야 할 것 같다.
          */
-        SearchResponse<Blog> response = redisService.getApiResultCache(key);
+        SearchResponse<Blog> response = queryCountService.getApiResultCache(key);
         if(response==null){
             //api 호출
             log.info("@@@@@@@ api 직접 호출 key={}", key);
             response = apiService.call(host, httpservletRequest, request);
             //레디스에 api 검색결과 저장
-            redisService.saveApiResultCache(key, response);
+            queryCountService.saveApiResultCache(key, response);
         }
 
         //레디스에 카운트 설정
         //TODO LongAdder, Accumulator 적용 -> zset 적용
-        redisService.inCreateCount(request.getQuery());
+        queryCountService.inCreateCount(request.getQuery());
         //TODO redisconfig에서 redis가 뜰때, 집계함수를 통해 count 집계
         //TODO 레디스에 카운트 센것 주기적으로 db에 저장 혹은 정합성 검사
 
