@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class SearchControllerTest {
     @Autowired
+    //IntelliJ 버전 이슈로 IDE 버그 있음(https://stackoverflow.com/questions/73085049/cant-autowired-mockmvc-using-webmvctest)
     private MockMvc mockMvc;
     @Test
     void getBlogList() throws Exception {
