@@ -37,6 +37,7 @@ public class EmbeddedRedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+//        redisTemplate.setValueSerializer(new StringRedisSerializer());// value 깨지면 이걸로 바꿔보자
         return redisTemplate;
     }
 
